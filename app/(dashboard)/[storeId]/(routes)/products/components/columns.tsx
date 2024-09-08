@@ -1,25 +1,26 @@
-"use client"
+"use client";
 
-import { ColumnDef } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table";
 
-import { CellAction } from "./cell-action"
+import { CellAction } from "./cell-action";
+import Link from "next/link";
 
 export type ProductColumn = {
-  id: string
+  id: string;
   name: string;
   price: string;
   category: string;
-  size: string;
-  color: string;
-  createdAt: string;
+  variants: number;
+  inStock: number;
   isFeatured: boolean;
   isArchived: boolean;
-}
+  createdAt: string;
+};
 
 export const columns: ColumnDef<ProductColumn>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: () => <div className="text-center">Name</div>,
   },
   {
     accessorKey: "isArchived",
@@ -37,19 +38,14 @@ export const columns: ColumnDef<ProductColumn>[] = [
     accessorKey: "category",
     header: "Category",
   },
+
   {
-    accessorKey: "size",
-    header: "Size",
+    accessorKey: "variants",
+    header: "Variants",
   },
   {
-    accessorKey: "color",
-    header: "Color",
-    cell: ({ row }) => (
-      <div className="flex items-center gap-x-2">
-        {row.original.color}
-        <div className="h-6 w-6 rounded-full border" style={{ backgroundColor: row.original.color }} />
-      </div>
-    )
+    accessorKey: "inStock",
+    header: "In Stock",
   },
   {
     accessorKey: "createdAt",
@@ -57,6 +53,6 @@ export const columns: ColumnDef<ProductColumn>[] = [
   },
   {
     id: "actions",
-    cell: ({ row }) => <CellAction data={row.original} />
+    cell: ({ row }) => <CellAction data={row.original} />,
   },
 ];
